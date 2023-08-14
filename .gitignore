@@ -8,3 +8,4 @@
 /dataSources.local.xml
 # Prototyping Dataset (all images)
 *.JPG
+*.JPG:Zone.Identifier
