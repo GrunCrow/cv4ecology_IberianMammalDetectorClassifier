@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Step 0</title>
+        <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+        
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+        
+    </head>
+    <body class="vscode-body vscode-light">
+        <h1 id="step-0">Step 0</h1>
+<p>If you are on a Windows machine or plan to work on a windows machine, note: most/all instruction will be linux/ubuntu-based. You should download <a href="https://ubuntu.com/wsl">WSL (Windows Subsystem for Linux)</a>, which will provide you an ubuntu terminal on your windows machine.</p>
+<h1 id="step-1---setup">Step 1 - Setup</h1>
+<h2 id="installing-vscode-and-python-setup">Installing VSCode and Python Setup</h2>
+<ul>
+<li>Install <a href="https://code.visualstudio.com/download">VScode</a>.</li>
+<li>Install a package manager:
+<ul>
+<li>(Nice, but not necessary) Install <a href="https://conda.io/projects/conda/en/latest/user-guide/install/index.html">conda</a>
+<ul>
+<li>once installed, create a virtual environment, and then activate that virtual environment</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<pre><code>conda create --name python_sandbox
+conda activate python_sandbox
+</code></pre>
+<ul>
+<li>Make sure that <a href="https://pip.pypa.io/en/stable/installation/">pip</a> is installed. If not, install it</li>
+<li>After pip is installed, installed all of the necessary python packages used by this script</li>
+</ul>
+<pre><code>pip install matplotlib numpy
+</code></pre>
+<h2 id="installing-extensions">Installing Extensions</h2>
+<ul>
+<li>Open up VScode.
+<ul>
+<li>If you are on a Windows machine, follow <a href="https://code.visualstudio.com/docs/remote/wsl-tutorial">these instructions</a> to make WSL your terminal in VSCoode</li>
+<li>Select your conda environment as your 'python kernel' - follow <a href="https://code.visualstudio.com/docs/datascience/jupyter-kernel-management#:~:text=You%20can%20open%20the%20kernel,Notebook%3A%20Select%20Notebook%20Kernel%20command.&amp;text=Note%3A%20In%20the%20previous%20versions,all%20available%20kernels%20by%20default.">these instructions</a></li>
+</ul>
+</li>
+<li>Go to the <a href="https://code.visualstudio.com/docs/editor/extension-marketplace">Extensions Marketplace</a> on the left-hand side</li>
+<li>Search for and install the following extensions:
+<ul>
+<li><code>Jupyter Keymap</code> -- lets you develop jupyter notebooks locally, without any network connection.</li>
+<li><code>Markdown All in One</code> -- useful for making markdown files readable</li>
+<li><code>Remote SSH</code> -- this will be useful once we have GPU resources that we can log into</li>
+</ul>
+</li>
+</ul>
+<h1 id="step-2">Step 2</h1>
+<ul>
+<li>Open up the folder containing this README and go to the .ipynb file. This is a jupyter notebook.</li>
+</ul>
+
+        
+        
+    </body>
+    </html>
