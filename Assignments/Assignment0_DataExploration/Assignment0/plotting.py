@@ -19,7 +19,7 @@ def plot_images_per_sequence(metadata, save=False):
     plt.ylabel('Number of images')
     plt.title('Images per sequence')
     plt.xticks(range(len(sorted_sequences)), sorted_sequences, rotation='vertical')
-    plt.grid(b=None)
+    plt.grid(visible=None)
     plt.tight_layout()
 
     if save:
@@ -30,7 +30,66 @@ def plot_images_per_sequence(metadata, save=False):
 
 
 
+def plot_images_per_category(meta_data, save=False):
+    plt.clf()
+    plt.rcParams['figure.figsize'] = [12, 6]
+    plt.rcParams['figure.dpi'] = 100
+    images_per_category = {cat['name']: [] for cat in meta_data.categories}  # Usar los nombres de las categorías
+    for im in meta_data.images:
+        if im['id'] in meta_data.im_to_cat:
+            category_id = meta_data.im_to_cat[im['id']]
+            category_info = meta_data.get_category_by_id(category_id)
+            images_per_category[category_info['name']].append(im['id'])
+    ind = range(len(meta_data.categories))
+    plt.bar(ind, [len(images_per_category[cat['name']]) for cat in meta_data.categories], edgecolor='b', log=True)
+    plt.xlabel('Category')
+    plt.ylabel('Number of images')
+    plt.title('Images per category')
+    plt.xticks(ind, [cat['name'] for cat in meta_data.categories], rotation='vertical')  # Etiquetas con los nombres de las categorías
+    plt.grid(visible=None)
+    plt.tight_layout()
+    plt.tick_params(axis='x', which='both', bottom=True, top=False)
+    plt.tick_params(axis='y', which='both', right=False, left=True)
+    if save:
+        os.makedirs('figs', exist_ok=True)
+        plt.savefig('figs/images_per_category.png')
+    else:
+        plt.show()
+
+
 def plot_images_per_category_sorted(meta_data, save=False):
+    plt.clf()
+    plt.rcParams['figure.figsize'] = [12, 6]
+    plt.rcParams['figure.dpi'] = 100
+    images_per_category = {cat['name']: [] for cat in meta_data.categories}  # Usar los nombres de las categorías
+    for im in meta_data.images:
+        if im['id'] in meta_data.im_to_cat:
+            category_id = meta_data.im_to_cat[im['id']]
+            category_info = meta_data.get_category_by_id(category_id)
+            images_per_category[category_info['name']].append(im['id'])
+    
+    sorted_categories = sorted(meta_data.categories, key=lambda cat: len(images_per_category[cat['name']]), reverse=True)
+    
+    ind = range(len(meta_data.categories))
+    plt.bar(ind, [len(images_per_category[cat['name']]) for cat in sorted_categories], edgecolor='b', log=True)
+    plt.xlabel('Category')
+    plt.ylabel('Number of images')
+    plt.title('Images per category')
+    plt.xticks(ind, [cat['name'] for cat in sorted_categories], rotation='vertical')  # Etiquetas con los nombres de las categorías
+    plt.grid(visible=None)
+    plt.tight_layout()
+    plt.tick_params(axis='x', which='both', bottom=True, top=False)
+    plt.tick_params(axis='y', which='both', right=False, left=True)
+    if save:
+        os.makedirs('figs', exist_ok=True)
+        plt.savefig('figs/images_per_category.png')
+    else:
+        plt.show()
+
+
+
+
+'''def plot_images_per_category_sorted(meta_data, save=False):
     plt.clf()
     plt.rcParams['figure.figsize'] = [12, 6]
     plt.rcParams['figure.dpi'] = 100
@@ -44,7 +103,7 @@ def plot_images_per_category_sorted(meta_data, save=False):
     plt.xlabel('Category')
     plt.ylabel('Number of images')
     plt.title('Images per category')
-    plt.grid(b=None)
+    #plt.grid(visible=None)
     plt.tight_layout()
     plt.tick_params(axis='x', which='both', bottom=True, top=False)
     plt.tick_params(axis='y', which='both', right=False, left=True)
@@ -52,7 +111,7 @@ def plot_images_per_category_sorted(meta_data, save=False):
         os.makedirs('figs', exist_ok=True)
         plt.savefig('figs/images_per_category.png')
     else:
-        plt.show()
+        plt.show()'''
 
 
 def plot_images_per_category_per_location(meta_data, save=False):
@@ -127,7 +186,7 @@ def plot_images_per_location(meta_data, save=False):
     plt.ylabel('Number of images')
     plt.title('Images per location')
     plt.xticks(range(len(sorted_locations)), sorted_locations, rotation='vertical')
-    plt.grid(b=None)
+    plt.grid(visible=None)
     plt.tight_layout()
 
     if save:
@@ -158,7 +217,7 @@ def plot_categories_per_location(meta_data, save=False):
     plt.ylabel('Number of categories')
     plt.title('Categories per location')
     plt.xticks(range(len(sorted_locations)), sorted_locations, rotation='vertical')
-    plt.grid(b=None)
+    plt.grid(visible=None)
     plt.tight_layout()
 
     if save:
@@ -181,7 +240,7 @@ def plot_images_per_sequence(metadata, save=False):
     plt.xlabel('Sequence')
     plt.ylabel('Number of images')
     plt.title('Images per sequence')
-    plt.grid(b=None)
+    plt.grid(visible=None)
     plt.tight_layout()
     plt.tick_params(axis='x', which='both', bottom=True, top=False)
     plt.tick_params(axis='y', which='both', right=False, left=True)
@@ -222,7 +281,7 @@ def plot_boxes_per_image(detections, metadata, save=False):
     plt.xlabel('Number of boxes')
     plt.ylabel('Number of images')
     plt.title('Number of boxes per image')
-    plt.grid(b=None)
+    plt.grid(visible=None)
     plt.tight_layout()
     plt.tick_params(axis='x', which='both', bottom=True, top=False)
     plt.tick_params(axis='y', which='both', right=False, left=True)
