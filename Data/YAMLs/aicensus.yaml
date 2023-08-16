@@ -1,0 +1,26 @@
+# Train/val/test sets as 
+    # 1) dir: path/to/imgs,
+    # 2) file: path/to/imgs.txt, or --------------------------------------------------------------------------
+    # 3) list: [path/to/imgs1, path/to/imgs2, ..]
+path: ../Dataset  # dataset root dir
+train: ../Data/TXTs/train.txt  # train images (relative to 'path') 128 images
+val: ../Data/TXTs/val.txt  # val images (relative to 'path') 128 images
+test: ../Data/TXTs/test.txt # test images (optional)
+
+# Classes
+names:
+  0: bird
+  1: cow
+  2: domestic dog
+  3: egyptian mongoose
+  4: european badger
+  5: european rabbit
+  6: fallow deer
+  7: genet
+  8: horse
+  9: human
+  10: iberian hare
+  11: iberian lynx
+  12: red deer
+  13: red fox
+  14: wild boar
