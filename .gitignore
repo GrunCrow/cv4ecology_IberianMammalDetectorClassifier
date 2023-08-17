@@ -166,3 +166,4 @@ cython_debug/
 # Prototyping Dataset (all images)
 *.JPG
 *:Zone.Identifier
+*.txt
