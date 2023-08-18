@@ -1,9 +1,14 @@
-from ultralytics import YOLO
-from constants import *
-# pip install comet_ml
 import comet_ml
 
-comet_ml.init()
+from ultralytics import YOLO
+from constants import *
+from constants_unshared import MY_API_KEY_COMET
+import os
+
+os.environ["COMET_API_KEY"] = MY_API_KEY_COMET
+
+# initialize experiment in comet
+comet_ml.init("ai-census") # it get the name of the project name on training
 
 # Create a new YOLO model from scratch
 model = YOLO(MODEL_NAME)
@@ -20,13 +25,14 @@ results = model.train(data=DATASET_YAML,
                       device = 0,                   # device to run on, i.e. cuda device=0 or device=0,1,2,3 or device=cpu
                       #workers = 8,                  # number of worker threads for data loading (per RANK if DDP)
                       project = "AI_Census/Trainings",       # project name
-                      name = "first_training",      # experiment name
+                      name = "second_training_night",      # experiment name
                       # exist_ok = False,           # whether to overwrite existing experiment
                       pretrained = True,            # whether to use a pretrained model
                       optimizer = 'auto',           # optimizer to use, choices=[SGD, Adam, Adamax, AdamW, NAdam, RAdam, RMSProp, auto]
                       verbose = True,               # whether to print verbose output
                       seed = 42,	                # random seed for reproducibility
                       resume = RESUME,	            # resume training from last checkpoint
+                      val = True	                # validate/test during training 
 
                       #cache = False,                # True/ram, disk or False. Use cache for data loading  
                       #deterministic = True,	        # whether to enable deterministic mode
@@ -48,21 +54,37 @@ results = model.train(data=DATASET_YAML,
                       #box = 7.5,	                # box loss gain
                       #cls = 0.5,	                # cls loss gain (scale with pixels)
                       #dfl = 1.5,	                # dfl loss gain
-                      #pose = 12.0,	                # pose loss gain (pose-only)
-                      #kobj = 2.0,	                # keypoint obj loss gain (pose-only)
                       #label_smoothing = 0.0,	    # label smoothing (fraction)
                       #nbs = 64,	                    # nominal batch size
+                      
+
+                      #dropout = 0.0,	            # use dropout regularization (classify train only) 
+                      
                       #overlap_mask = True,	        # masks should overlap during training (segment train only)
                       #mask_ratio = 4,	            # mask downsample ratio (segment train only)
-                      #dropout = 0.0,	            # use dropout regularization (classify train only)
-                      val = True	                # validate/test during training  
+                      #pose = 12.0,	                # pose loss gain (pose-only)
+                      #kobj = 2.0,	                # keypoint obj loss gain (pose-only)
                       )
 
 # Evaluate the model's performance on the validation set
 results = model.val()
 
+# load best model from training results
+#best_model = YOLO('/content/YOLOv8-With-Comet/train/weights/best.pt')
+
+# get predictions on best model
+#results = best_model.predict("/content/Data/images/val/0a411d151f978818.png", save=True)
+
 # Perform object detection on an image using the model
 # results = model('https://ultralytics.com/images/bus.jpg')
+
+# What Manuel wanted :´) -> for classification model, will it work with detection???????????????????
+'''# Run inference on an image
+results = model('bus.jpg')  # results list
+
+# View results
+for r in results:
+    print(r.probs)  # print the Probs object containing the detected class probabilities'''
 
 # Export the model to ONNX format
 success = model.export(format='onnx')

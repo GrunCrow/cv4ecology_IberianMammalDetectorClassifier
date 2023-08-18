@@ -1,6 +1,6 @@
 task: detect
 mode: train
-model: AI_Census/weights/yolov8s.pt
+model: AI_Census/Trainings/first_training/weights/best.pt
 data: AI_Census/aicensus.yaml
 epochs: 200
 patience: 40
@@ -71,7 +71,7 @@ momentum: 0.937
 weight_decay: 0.0005
 warmup_epochs: 3.0
 warmup_momentum: 0.8
-warmup_bias_lr: 0.1
+warmup_bias_lr: 0.0
 box: 7.5
 cls: 0.5
 dfl: 1.5

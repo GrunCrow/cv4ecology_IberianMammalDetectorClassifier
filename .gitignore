@@ -166,3 +166,6 @@ cython_debug/
 # Prototyping Dataset (all images)
 *.JPG
 *:Zone.Identifier
+
+# Non sharable credentials (API KEY)
+AI_Census/constants_unshared.py
