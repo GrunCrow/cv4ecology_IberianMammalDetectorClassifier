@@ -33,7 +33,7 @@ results = model.train(data=DATASET_YAML,
                       seed = 42,	                # random seed for reproducibility
                       resume = RESUME,	            # resume training from last checkpoint
                       val = True	                # validate/test during training 
-
+                      save_json=True,
                       #cache = False,                # True/ram, disk or False. Use cache for data loading  
                       #deterministic = True,	        # whether to enable deterministic mode
                       #single_cls = False,	        # train multi-class data as single-class
