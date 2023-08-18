@@ -11,4 +11,12 @@ TEST_TXT = PATH + "Data/TXTs/test_dataset_caltech.txt"
 
 # MODEL
 MODEL_NAME = 'yolov8s.yaml'
-MODEL_WEIGHTS = PATH + 'weights/yolov8s.pt' # created on path folder
+
+RESUME = False
+MODEL_WEIGHTS_BEST = PATH + "weights/best.pt"
+MODEL_WEIGHTS_INITIAL = PATH + 'weights/yolov8s.pt' # created on path folder
+
+MODEL_WEIGHTS = MODEL_WEIGHTS_BEST # created on path folder
+
+if MODEL_WEIGHTS == MODEL_WEIGHTS_BEST:
+    RESUME = True

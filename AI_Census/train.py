@@ -1,5 +1,9 @@
 from ultralytics import YOLO
 from constants import *
+# pip install comet_ml
+import comet_ml
+
+comet_ml.init()
 
 # Create a new YOLO model from scratch
 model = YOLO(MODEL_NAME)
@@ -13,22 +17,23 @@ results = model.train(data=DATASET_YAML,
                       patience = 40,                # epochs to wait for no observable improvement for early stopping of training
                       batch = 32,                   # number of images per batch (-1 for AutoBatch)
                       save = True,                  # save train checkpoints and predict results
-                      #cache = False,                # True/ram, disk or False. Use cache for data loading  
                       device = 0,                   # device to run on, i.e. cuda device=0 or device=0,1,2,3 or device=cpu
                       #workers = 8,                  # number of worker threads for data loading (per RANK if DDP)
                       project = "AI_Census/Trainings",       # project name
                       name = "first_training",      # experiment name
-                      # exist_ok = False,             # whether to overwrite existing experiment
+                      # exist_ok = False,           # whether to overwrite existing experiment
                       pretrained = True,            # whether to use a pretrained model
                       optimizer = 'auto',           # optimizer to use, choices=[SGD, Adam, Adamax, AdamW, NAdam, RAdam, RMSProp, auto]
                       verbose = True,               # whether to print verbose output
                       seed = 42,	                # random seed for reproducibility
+                      resume = RESUME,	            # resume training from last checkpoint
+
+                      #cache = False,                # True/ram, disk or False. Use cache for data loading  
                       #deterministic = True,	        # whether to enable deterministic mode
                       #single_cls = False,	        # train multi-class data as single-class
                       #rect = False,	                # rectangular training with each batch collated for minimum padding
                       #cos_lr = False,	            # use cosine learning rate scheduler
                       #close_mosaic = 10,	        # (int) disable mosaic augmentation for final epochs (0 to disable)
-                      #resume = False,	            # resume training from last checkpoint
                       #amp = True,	                # Automatic Mixed Precision (AMP) training, choices=[True, False]
                       #fraction = 1.0,	            # dataset fraction to train on (default is 1.0, all images in train set)
                       #profile = False,	            # profile ONNX and TensorRT speeds during training for loggers
