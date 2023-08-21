@@ -1,14 +1,14 @@
-#import comet_ml
+import comet_ml
 
 from ultralytics import YOLO
 from constants import *
 from constants_unshared import MY_API_KEY_COMET
 import os
 
-#os.environ["COMET_API_KEY"] = MY_API_KEY_COMET
+os.environ["COMET_API_KEY"] = MY_API_KEY_COMET
 
 # initialize experiment in comet
-#comet_ml.init("ai-census") # it get the name of the project name on training
+comet_ml.init("ai-census") # it get the name of the project name on training
 
 # Create a new YOLO model from scratch
 model = YOLO(MODEL_NAME)
@@ -25,7 +25,7 @@ results = model.train(data=DATASET_YAML,
                       device = 1,                   # device to run on, i.e. cuda device=0 or device=0,1,2,3 or device=cpu
                       #workers = 8,                  # number of worker threads for data loading (per RANK if DDP)
                       project = "AI_Census/Trainings/YOLOv8",       # project name
-                      name = "test",      # experiment name
+                      name = "6_exp_name",      # experiment name
                       # exist_ok = False,           # whether to overwrite existing experiment
                       pretrained = True,            # whether to use a pretrained model
                       optimizer = 'auto',           # optimizer to use, choices=[SGD, Adam, Adamax, AdamW, NAdam, RAdam, RMSProp, auto]

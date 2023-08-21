@@ -7,6 +7,8 @@ import os
 
 os.environ["COMET_API_KEY"] = MY_API_KEY_COMET
 
+PATH = "cv4ecology/"
+
 # initialize experiment in comet
 #comet_ml.init("ai-census") # it get the name of the project name on training
 

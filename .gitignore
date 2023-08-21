@@ -167,5 +167,8 @@ cython_debug/
 *.JPG
 *:Zone.Identifier
 
+# Dataset (txt files)
+*.txt
+
 # Non sharable credentials (API KEY)
 AI_Census/constants_unshared.py

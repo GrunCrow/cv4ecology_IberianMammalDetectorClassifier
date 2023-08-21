@@ -15,7 +15,7 @@ MODEL_NAME = 'yolov8s.yaml'
 
 RESUME = False
 MODEL_WEIGHTS_INITIAL = PATH + 'weights/yolov8s.pt' # created on path folder
-MODEL_WEIGHTS_BEST = PATH + "Trainings/YOLOv8/5_exp_single_cls/weights/best.pt"
+MODEL_WEIGHTS_BEST = PATH + "Trainings/YOLOv8/2_exp_batch_16/weights/best.pt"
 
 MODEL_WEIGHTS = MODEL_WEIGHTS_INITIAL # created on path folder
 

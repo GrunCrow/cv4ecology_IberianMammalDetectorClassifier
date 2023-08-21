@@ -52,7 +52,8 @@ while True:
     # Mostrar la imagen con bounding boxes
     cv2.imshow('Image with Bounding Boxes', image)
     
-    '''key = cv2.waitKey(0)
+    '''
+    key = cv2.waitKey(0)
 
     if key == ord('q'):  # Salir del bucle si se presiona 'q'
         break
