@@ -23,7 +23,7 @@ results = best_model.predict(source=TEST_TXT, #"Dataset/multispecies.jpeg", # (s
                              save_conf = True,  # (bool) save results with confidence scores
                              # save_crop = True,  # (bool) save cropped images with results
 
-                             show = True,  # (bool) show results if possible
+                             #show = True,  # (bool) show results if possible
                              #show_labels = True,  # (bool) show object labels in plots
                              #show_conf = True,  # (bool) show object confidence scores in plots
 
