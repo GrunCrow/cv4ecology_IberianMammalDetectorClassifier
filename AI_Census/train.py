@@ -1,14 +1,14 @@
-import comet_ml
+#import comet_ml
 
 from ultralytics import YOLO
 from constants import *
 from constants_unshared import MY_API_KEY_COMET
 import os
 
-os.environ["COMET_API_KEY"] = MY_API_KEY_COMET
+#os.environ["COMET_API_KEY"] = MY_API_KEY_COMET
 
 # initialize experiment in comet
-comet_ml.init("ai-census") # it get the name of the project name on training
+#comet_ml.init("ai-census") # it get the name of the project name on training
 
 # Create a new YOLO model from scratch
 model = YOLO(MODEL_NAME)
@@ -18,14 +18,14 @@ model = YOLO(MODEL_WEIGHTS)
 
 # Train the model using the 'coco128.yaml' dataset for 3 epochs
 results = model.train(data=DATASET_YAML, 
-                      epochs = 200,                   # number of epochs to train for
+                      epochs = 1,                   # number of epochs to train for
                       patience = 40,                # epochs to wait for no observable improvement for early stopping of training
                       batch = 16,                   # number of images per batch (-1 for AutoBatch)
                       save = True,                  # save train checkpoints and predict results
                       device = 1,                   # device to run on, i.e. cuda device=0 or device=0,1,2,3 or device=cpu
                       #workers = 8,                  # number of worker threads for data loading (per RANK if DDP)
                       project = "AI_Census/Trainings/YOLOv8",       # project name
-                      name = "5_exp_single_cls",      # experiment name
+                      name = "test",      # experiment name
                       # exist_ok = False,           # whether to overwrite existing experiment
                       pretrained = True,            # whether to use a pretrained model
                       optimizer = 'auto',           # optimizer to use, choices=[SGD, Adam, Adamax, AdamW, NAdam, RAdam, RMSProp, auto]
@@ -33,7 +33,8 @@ results = model.train(data=DATASET_YAML,
                       seed = 42,	                # random seed for reproducibility
                       resume = RESUME,	            # resume training from last checkpoint
                       val = True,	                # validate/test during training 
-                      save_json=True,  
+                      save_json=True, 
+                       
                       single_cls = True,	        # train multi-class data as single-class
 
                       #cache = False,               # True/ram, disk or False. Use cache for data loading  
