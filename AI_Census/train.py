@@ -19,13 +19,13 @@ model = YOLO(MODEL_WEIGHTS)
 # Train the model using the 'coco128.yaml' dataset for 3 epochs
 results = model.train(data=DATASET_YAML, 
                       epochs = 200,                   # number of epochs to train for
-                      patience = 25,                # epochs to wait for no observable improvement for early stopping of training
-                      batch = 8,                   # number of images per batch (-1 for AutoBatch)
+                      patience = 20,                # epochs to wait for no observable improvement for early stopping of training
+                      batch = 128,                   # number of images per batch (-1 for AutoBatch)
                       save = True,                  # save train checkpoints and predict results
-                      device = 0,                   # device to run on, i.e. cuda device=0 or device=0,1,2,3 or device=cpu
+                      device = 1,                   # device to run on, i.e. cuda device=0 or device=0,1,2,3 or device=cpu
                       #workers = 8,                  # number of worker threads for data loading (per RANK if DDP)
                       project = "AI_Census/Trainings/YOLOv8",       # project name
-                      name = "1_exp_batch_8",      # experiment name
+                      name = "1_exp_batch_128",      # experiment name
                       # exist_ok = False,           # whether to overwrite existing experiment
                       pretrained = True,            # whether to use a pretrained model
                       optimizer = 'auto',           # optimizer to use, choices=[SGD, Adam, Adamax, AdamW, NAdam, RAdam, RMSProp, auto]
