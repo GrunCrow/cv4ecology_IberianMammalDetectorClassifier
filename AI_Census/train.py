@@ -18,14 +18,14 @@ model = YOLO(MODEL_WEIGHTS)
 
 # Train the model using the 'coco128.yaml' dataset for 3 epochs
 results = model.train(data=DATASET_YAML, 
-                      epochs = 1,                   # number of epochs to train for
-                      patience = 40,                # epochs to wait for no observable improvement for early stopping of training
-                      batch = 16,                   # number of images per batch (-1 for AutoBatch)
+                      epochs = 200,                   # number of epochs to train for
+                      patience = 25,                # epochs to wait for no observable improvement for early stopping of training
+                      batch = 8,                   # number of images per batch (-1 for AutoBatch)
                       save = True,                  # save train checkpoints and predict results
-                      device = 1,                   # device to run on, i.e. cuda device=0 or device=0,1,2,3 or device=cpu
+                      device = 0,                   # device to run on, i.e. cuda device=0 or device=0,1,2,3 or device=cpu
                       #workers = 8,                  # number of worker threads for data loading (per RANK if DDP)
                       project = "AI_Census/Trainings/YOLOv8",       # project name
-                      name = "6_exp_name",      # experiment name
+                      name = "1_exp_batch_8",      # experiment name
                       # exist_ok = False,           # whether to overwrite existing experiment
                       pretrained = True,            # whether to use a pretrained model
                       optimizer = 'auto',           # optimizer to use, choices=[SGD, Adam, Adamax, AdamW, NAdam, RAdam, RMSProp, auto]
@@ -35,7 +35,7 @@ results = model.train(data=DATASET_YAML,
                       val = True,	                # validate/test during training 
                       save_json=True, 
                        
-                      single_cls = True,	        # train multi-class data as single-class
+                      #single_cls = True,	        # train multi-class data as single-class
 
                       #cache = False,               # True/ram, disk or False. Use cache for data loading  
                       #deterministic = True,	    # whether to enable deterministic mode
