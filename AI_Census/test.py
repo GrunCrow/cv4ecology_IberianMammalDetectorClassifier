@@ -16,9 +16,9 @@ PATH = "cv4ecology/"
 model = YOLO(MODEL_NAME)
 
 # Load a pretrained YOLO model (recommended for training)
-model = YOLO(MODEL_WEIGHTS_BEST)
+model = YOLO(get_best_model_weights("1_exp_batch_16"))
 
-metrics = model.val(split="test",           # (str) dataset split to use for validation, i.e. 'val', 'test' or 'train'
+metrics = model.val(split="val",           # (str) dataset split to use for validation, i.e. 'val', 'test' or 'train'
                     save_json = True,       # (bool) save results to JSON file
                     device = 1,
                     conf = 0.5,              # (float, optional) object confidence threshold for detection (default 0.25 predict, 0.001 val)

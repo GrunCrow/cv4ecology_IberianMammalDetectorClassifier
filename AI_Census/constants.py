@@ -15,7 +15,7 @@ MODEL_NAME = 'yolov8s.yaml'
 
 RESUME = False
 MODEL_WEIGHTS_INITIAL = PATH + 'weights/yolov8s.pt' # created on path folder
-MODEL_WEIGHTS_BEST = PATH + "Trainings/YOLOv8/1_exp_batch_128/weights/best.pt"
+MODEL_WEIGHTS_BEST = PATH + "Trainings/YOLOv8/1_exp_batch_16/weights/best.pt"
 
 MODEL_WEIGHTS = MODEL_WEIGHTS_INITIAL # created on path folder
 
@@ -25,3 +25,6 @@ if MODEL_WEIGHTS == MODEL_WEIGHTS_BEST:
 # ULTRALYTICS CODE
 
 ULTRALYTICS_MULTI_LABEL = True  # Default Value = False -> to obtain all classes conf vector??
+
+def get_best_model_weights(model_name):
+    return PATH + "Trainings/YOLOv8/" + model_name + "/weights/best.pt"
