@@ -6,10 +6,11 @@ from constants_unshared import MY_API_KEY_COMET
 import os
 
 os.environ["COMET_API_KEY"] = MY_API_KEY_COMET
-os.environ["COMET_AUTO_LOG_GRAPH"] = True
-os.environ["COMET_AUTO_LOG_PARAMETERS"] = True
-os.environ["COMET_AUTO_LOG_METRICS"] = True
-os.environ["COMET_LOG_PER_CLASS_METRICS"] = True
+os.environ["COMET_AUTO_LOG_GRAPH"] = "true"
+os.environ["COMET_AUTO_LOG_PARAMETERS"] = "true"
+os.environ["COMET_AUTO_LOG_METRICS"] = "true"
+os.environ["COMET_LOG_PER_CLASS_METRICS"] = "true"
+os.environ["COMET_MAX_IMAGE_UPLOADS"] = "0"
 
 # initialize experiment in comet
 comet_ml.init("ai-census") # it get the name of the project name on training
@@ -24,10 +25,11 @@ model = YOLO(MODEL_WEIGHTS)
 results = model.train(
                       data=DATASET_YAML, 
                       device = 1,                   # device to run on, i.e. cuda device=0 or device=0,1,2,3 or device=cpu
-                      name = "1_exp_batch_16",      # experiment name
+                      epochs = 200,
+                      name = "2_exp_batch_16_no_birds_no_domdog",      # experiment name
                       resume = RESUME,	            # resume training from last checkpoint
                       #single_cls = True,	        # train multi-class data as single-class -> def = False
-                      cfg="config/config.yaml",
+                      cfg="AI_Census/config/config.yaml",
                       )
 
 # What Manuel wanted :´) -> for classification model, will it work with detection???????????????????
