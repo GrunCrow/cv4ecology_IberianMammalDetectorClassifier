@@ -1,6 +1,10 @@
 # AI-Census: Automated Census and Biodiversity Monitoring System using Deep Learning
 
-![Project Logo](https://panoptes-uploads.zooniverse.org/user_avatar/1c53ea16-0143-46bc-8f80-eb1ad8c91a82.jpeg) <!-- You can add a logo/image related to your project here -->
+<p align="center">
+  <img src="https://panoptes-uploads.zooniverse.org/user_avatar/1c53ea16-0143-46bc-8f80-eb1ad8c91a82.jpeg" alt="AI-Census Logo" width=200/>
+</p>
+
+<!--![Project Logo](https://panoptes-uploads.zooniverse.org/user_avatar/1c53ea16-0143-46bc-8f80-eb1ad8c91a82.jpeg) <!-- You can add a logo/image related to your project here -->
 
 ## Description
 
@@ -12,7 +16,8 @@ By leveraging cutting-edge deep learning methods, the project aims to achieve un
 
 - Utilization of camera-trap images from Doñana National Park.
 - Generation of bounding boxes and JSON annotations for images in COCO format.
-- Development of a comprehensive dataset for training, validation and evaluation.
+- Development of various datasets for training, validation and evaluation to check data poisoning effects and try to eliminate it.
+- Development of a comprehensive dataset for training, validation and test.
 - Creation of a state-of-the-art Neural Network for species detection and classification.
 <!--- Advanced techniques for optimizing model performance and efficiency.-->
 
@@ -45,9 +50,11 @@ The repository is organized as follows:
 
 Using [YOLOv8](https://github.com/ultralytics/ultralytics) trained on custom data for detection and classification.
 
+If you want more information about the decision that I made for the project you can check [this](https://github.com/CV4EcologySchool/iberian_mammals_camtrap/tree/main/AI_Census#readme)
+
 Current best model:
-- [Model Folder](https://github.com/GrunCrow/cv4ecology/tree/main/AI_Census/Trainings/YOLOv8/1_exp_batch_128)
-- [Configuration](https://github.com/GrunCrow/cv4ecology/blob/main/AI_Census/Trainings/YOLOv8/1_exp_batch_128/args.yaml)
+- [Model Folder](https://github.com/GrunCrow/cv4ecology/tree/main/AI_Census/Trainings/YOLOv8/1_exp_batch_16)
+- [Configuration](https://github.com/GrunCrow/cv4ecology/blob/main/AI_Census/Trainings/YOLOv8/1_exp_batch_16/args.yaml)
 - [Results]() <!-- Todo add link -->
 
 ### Cool stuff related to this workshop
