@@ -3,7 +3,7 @@ mode: train
 model: AI_Census/weights/yolov8s.pt
 data: AI_Census/aicensus.yaml
 epochs: 200
-patience: 20
+patience: 40
 batch: 16
 imgsz: 640
 save: true
@@ -94,4 +94,4 @@ mixup: 0.0
 copy_paste: 0.0
 cfg: null
 tracker: botsort.yaml
-save_dir: AI_Census/Trainings/YOLOv8/1_exp_batch_16
+save_dir: AI_Census/Trainings/YOLOv8/1_exp_batch_162
