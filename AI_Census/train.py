@@ -24,9 +24,9 @@ model = YOLO(MODEL_WEIGHTS)
 # Train the model using the 'coco128.yaml' dataset for 3 epochs
 results = model.train(
                       data=DATASET_YAML, 
-                      device = 1,                   # device to run on, i.e. cuda device=0 or device=0,1,2,3 or device=cpu
+                      device = 0,                   # device to run on, i.e. cuda device=0 or device=0,1,2,3 or device=cpu
                       epochs = 200,
-                      name = "2_exp_batch_16_no_birds_no_domdog",      # experiment name
+                      name = "2_exp_batch_16_no_birds",      # experiment name
                       resume = RESUME,	            # resume training from last checkpoint
                       #single_cls = True,	        # train multi-class data as single-class -> def = False
                       cfg="AI_Census/config/config.yaml",
