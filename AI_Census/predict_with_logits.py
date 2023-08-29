@@ -13,6 +13,8 @@ from PIL import Image
 
 import json
 
+from constants import *
+
 
 class SaveIO:
     """Simple PyTorch hook to save the output of a nn.module."""
@@ -117,12 +119,14 @@ def plot_image(img_path, results, category_mapping = None):
     plt.savefig(f'{os.path.basename(img_path)}_test.jpg', bbox_inches="tight", dpi=300)
 
 
-def write_json(img_path, results):
+def write_json(results):
     # Create a list to store the predictions data
     predictions = []
 
     for result in results:
-        image_id = os.path.basename(img_path).split('.')[0]
+        image_id = os.path.basename(result['image_id'])#.split('.')[0]
+        # image_id = result["image_id"]
+        #image_id = os.path.basename(img_path).split('.')[0]
         max_category_id = result['activations'].index(max(result['activations']))
         category_id = max_category_id
         bbox = result['bbox']
@@ -141,7 +145,7 @@ def write_json(img_path, results):
 
     # Write the predictions list to a JSON file
     with open('predictions.json', 'w') as f:
-        json.dump(predictions, f)
+        json.dump(predictions, f, indent=4)
 
 
 def calculate_iou(box1, box2):
@@ -254,7 +258,9 @@ def results_predict(img_path, model, hooks, threshold=0.5, iou=0.7, save_image =
         # Filter by score threshold (of max score class)
         if max(class_probs_after_sigmoid) > threshold:
             boxes.append({
-                'bbox': [x0.item(), y0.item(), x1.item(), y1.item()],
+                'image_id': img_path,
+                # YOLO output coordinates: [x,y,w,h]: (x,y)=top left corner, w=width, h=height
+                'bbox': [x0.item(), y0.item(), x1.item() - x0.item(), y1.item() - y0.item()],
                 'logits': logits.cpu().tolist(),
                 'activations': [p.item() for p in class_probs_after_sigmoid]
             })
@@ -270,7 +276,7 @@ def results_predict(img_path, model, hooks, threshold=0.5, iou=0.7, save_image =
     return nms_results
 
 
-def run_predict(input_path, model, hooks, threshold=0.5, iou_threshold=0.7, save_image = False, save_json = False, category_mapping = None):
+def run_predict(input_path, model, hooks, score_threshold=0.5, iou_threshold=0.7, save_image = False, save_json = False, category_mapping = None):
     """
     Run prediction with a YOLO model.
 
@@ -300,12 +306,16 @@ def run_predict(input_path, model, hooks, threshold=0.5, iou_threshold=0.7, save
     all_results = []
 
     for img_path in img_paths:
-        results = results_predict(img_path, model, hooks, threshold, iou=iou_threshold, save_image=save_image, category_mapping=category_mapping)
+        results = results_predict(img_path, model, hooks, score_threshold, iou=iou_threshold, save_image=save_image, category_mapping=category_mapping)
 
         all_results.extend(results)
 
+        # save all results for each new result
+        if save_json:
+            write_json(all_results)
+
     if save_json:
-        write_json(img_path, all_results)
+        write_json(all_results)
 
     return all_results
 
@@ -315,9 +325,11 @@ def run_predict(input_path, model, hooks, threshold=0.5, iou_threshold=0.7, save
 def main():
     # change these, of course :)
     SAVE_TEST_IMG = False
-    model_path = 'yolov8n.pt'
-    img_path = 'bus.jpg'
-    threshold = 0.5
+    model_path = get_best_model_weights("2_exp_batch_16_no_birds")
+
+    img_path = "Dataset/multispecies.jpeg"
+    txt_path = "Dataset/validation_test.txt"
+    score_threshold = 0.5
     iou_threshold = 0.7
 
     # category mapping to show category name in addition of category id
@@ -345,7 +357,14 @@ def main():
     model, hooks = load_and_prepare_model(model_path)
 
     # run inference
-    results = run_predict(img_path, model, hooks, threshold, iou=iou_threshold, save_image=SAVE_TEST_IMG, save_json=True, category_mapping=category_mapping)
+    results = run_predict(input_path=txt_path, 
+                          model=model, 
+                          hooks=hooks, 
+                          score_threshold=score_threshold, 
+                          iou_threshold=iou_threshold, 
+                          save_image=SAVE_TEST_IMG, 
+                          save_json=True, 
+                          category_mapping=category_mapping)
 
     # Print Boxes information
     print("Processed", len(results), "boxes")

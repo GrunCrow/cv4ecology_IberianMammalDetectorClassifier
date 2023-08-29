@@ -4,7 +4,7 @@ from constants import *
 model_path = get_best_model_weights("2_exp_batch_16_no_birds")
 
 img_path = "Dataset/multispecies.jpeg"
-txt_path = "Dataset/val_unique_locations.txt"
+txt_path = "Dataset/validation.txt"
 
 category_mapping = {
     0: "bird",
@@ -28,12 +28,12 @@ category_mapping = {
 model, hooks = load_and_prepare_model(model_path)
 
 # run inference
-results = run_predict(input_path=img_path, 
+results = run_predict(input_path=txt_path, 
                       model=model, 
                       hooks=hooks, 
-                      threshold=0.5, 
+                      score_threshold=0.5, 
                       iou_threshold=0.7, 
-                      save_image = True,
+                      save_image = False,
                       save_json=True,
                       category_mapping = category_mapping)
 

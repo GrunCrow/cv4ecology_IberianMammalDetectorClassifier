@@ -28,7 +28,7 @@ results = model.train(
                       epochs = 200,
                       name = "2_exp_nobirds_gpu",      # experiment name
                       resume = RESUME,	            # resume training from last checkpoint
-                      single_cls = True,	        # train multi-class data as single-class -> def = False
+                      single_cls = False,	        # train multi-class data as single-class -> def = False
                       cfg="AI_Census/config/config.yaml",
                       )
 

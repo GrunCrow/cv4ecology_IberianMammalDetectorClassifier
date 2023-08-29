@@ -19,7 +19,7 @@ optimizer: auto
 verbose: true
 seed: 42
 deterministic: true
-single_cls: true
+single_cls: false
 rect: false
 cos_lr: false
 close_mosaic: 10
