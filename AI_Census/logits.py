@@ -4,17 +4,19 @@ from constants import *
 model_path = get_best_model_weights("2_exp_batch_16_no_birds")
 
 img_path = "Dataset/multispecies.jpeg"
+txt_path = "Dataset/val_unique_locations.txt"
 
 # load the model
 model, hooks = load_and_prepare_model(model_path)
 
 # run inference
-results = run_predict(img_path=img_path, 
+results = run_predict(input_path=txt_path, 
                       model=model, 
                       hooks=hooks, 
                       threshold=0.5, 
-                      iou=0.7, 
-                      save_image = True)
+                      iou_threshold=0.7, 
+                      save_image = True,
+                      save_json=True)
 
 for result in results:
     print("\n")
