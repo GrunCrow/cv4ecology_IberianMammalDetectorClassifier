@@ -26,9 +26,9 @@ results = model.train(
                       data=DATASET_YAML, 
                       device = 0,                   # device to run on, i.e. cuda device=0 or device=0,1,2,3 or device=cpu
                       epochs = 200,
-                      name = "2_exp_batch_16_no_birds",      # experiment name
+                      name = "3_exp_single_class",      # experiment name
                       resume = RESUME,	            # resume training from last checkpoint
-                      #single_cls = True,	        # train multi-class data as single-class -> def = False
+                      single_cls = True,	        # train multi-class data as single-class -> def = False
                       cfg="AI_Census/config/config.yaml",
                       )
 
