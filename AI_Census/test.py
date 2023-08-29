@@ -16,14 +16,14 @@ PATH = "cv4ecology/"
 model = YOLO(MODEL_NAME)
 
 # Load a pretrained YOLO model (recommended for training)
-model = YOLO(get_best_model_weights("2_exp_batch_16_no_birds"))
+model = YOLO(get_best_model_weights("3_exp_single_class"))
 
 metrics = model.val(split="val",           # (str) dataset split to use for validation, i.e. 'val', 'test' or 'train'
                     save_json = True,       # (bool) save results to JSON file
                     device = 1,
-                    conf = 0.6,              # (float, optional) object confidence threshold for detection (default 0.25 predict, 0.001 val)
+                    conf = 0.5,              # (float, optional) object confidence threshold for detection (default 0.25 predict, 0.001 val)
                     #save_hybrid = True,   # (bool) save hybrid version of labels (labels + additional predictions)
-                    iou = 0.5                # (float) intersection over union (IoU) threshold for NMS
+                    #iou = 0.5                # (float) intersection over union (IoU) threshold for NMS
                     #max_det = 300            # (int) maximum number of detections per image
                     #half = False             # (bool) use half precision (FP16)
                     #dnn = False              # (bool) use OpenCV DNN for ONNX inference

@@ -65,7 +65,7 @@ def is_image_file(file_path):
     return any(file_path.lower().endswith(ext) for ext in image_extensions)
 
 
-def plot_image(img_path, results):
+def plot_image(img_path, results, category_mapping = None):
     """
     Display the image with bounding boxes and their corresponding class scores.
 
@@ -87,13 +87,18 @@ def plot_image(img_path, results):
         tag_color = "k"  # black
         max_score = max(box['activations'])
         max_category_id = box['activations'].index(max_score)
+        category_name = max_category_id
+
+        if category_mapping:
+            max_category_name = category_mapping.get(max_category_id, "Unknown")
+            category_name = max_category_name
 
         rect = patches.Rectangle(
             (x0, y0),
             x1 - x0,
             y1 - y0,
             edgecolor=box_color,
-            label=f"{max_category_id} ({max_score:.2f})",
+            label=f"{max_category_id}: {category_name} ({max_score:.2f})",
             facecolor='none'
         )
         ax.add_patch(rect)
@@ -198,7 +203,7 @@ def nms(boxes, iou_threshold=0.7):
     return filtered_boxes
 
 
-def results_predict(img_path, model, hooks, threshold=0.5, iou=0.7, save_image = False):
+def results_predict(img_path, model, hooks, threshold=0.5, iou=0.7, save_image = False, category_mapping = None):
     """
     Run prediction with a YOLO model and apply Non-Maximum Suppression (NMS) to the results.
 
@@ -257,7 +262,7 @@ def results_predict(img_path, model, hooks, threshold=0.5, iou=0.7, save_image =
     nms_results = nms(boxes, iou)
 
     if save_image:
-        plot_image(img_path, nms_results)
+        plot_image(img_path, nms_results, category_mapping)
 
     # if save_json:
     #     write_json(img_path, nms_results)
@@ -265,7 +270,7 @@ def results_predict(img_path, model, hooks, threshold=0.5, iou=0.7, save_image =
     return nms_results
 
 
-def run_predict(input_path, model, hooks, threshold=0.5, iou_threshold=0.7, save_image = False, save_json = False):
+def run_predict(input_path, model, hooks, threshold=0.5, iou_threshold=0.7, save_image = False, save_json = False, category_mapping = None):
     """
     Run prediction with a YOLO model.
 
@@ -295,7 +300,7 @@ def run_predict(input_path, model, hooks, threshold=0.5, iou_threshold=0.7, save
     all_results = []
 
     for img_path in img_paths:
-        results = results_predict(img_path, model, hooks, threshold, iou=iou_threshold, save_image=save_image)
+        results = results_predict(img_path, model, hooks, threshold, iou=iou_threshold, save_image=save_image, category_mapping=category_mapping)
 
         all_results.extend(results)
 
@@ -315,11 +320,32 @@ def main():
     threshold = 0.5
     iou_threshold = 0.7
 
+    # category mapping to show category name in addition of category id
+    category_mapping = {
+        0: "bird",
+        1: "cow",
+        2: "domestic dog",
+        3: "egyptian mongoose",
+        4: "european badger",
+        5: "european rabbit",
+        6: "fallow deer",
+        7: "genet",
+        8: "horse",
+        9: "human",
+        10: "iberian hare",
+        11: "iberian lynx",
+        12: "red deer",
+        13: "red fox",
+        14: "wild boar",
+    }
+
+    # or not category_mapping (=None)
+
     # load the model
     model, hooks = load_and_prepare_model(model_path)
 
     # run inference
-    results = run_predict(img_path, model, hooks, threshold, iou=iou_threshold, save_image=SAVE_TEST_IMG)
+    results = run_predict(img_path, model, hooks, threshold, iou=iou_threshold, save_image=SAVE_TEST_IMG, save_json=True, category_mapping=category_mapping)
 
     # Print Boxes information
     print("Processed", len(results), "boxes")
