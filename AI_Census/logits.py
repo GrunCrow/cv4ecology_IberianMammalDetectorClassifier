@@ -17,9 +17,10 @@ results = run_predict(img_path=img_path,
                       save_image = True)
 
 for result in results:
-    print(result['bbox'])
-    print(result['logits'])
-    print(result['activations'])
+    print("\n")
+    print("Bounding Box :" + str(result['bbox']))
+    print("Logits :" + str(result['logits']))
+    print("Activations :" + str(result['activations']))
     print("\n")
 
 #plot_image(img_path, results)

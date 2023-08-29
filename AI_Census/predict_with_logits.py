@@ -7,7 +7,9 @@ from ultralytics.nn.modules.head import Detect
 from ultralytics.utils import ops
 
 import matplotlib.pyplot as plt
+import matplotlib.patches as patches
 import cv2
+from PIL import Image
 
 
 class SaveIO:
@@ -51,14 +53,67 @@ def load_and_prepare_model(model_path):
 
 
 def plot_image(img_path, results):
-    img = cv2.imread(img_path)
+    """
+    Display the image with bounding boxes and their corresponding class scores.
+
+    Args:
+        img_path (str): Path to the image file.
+        results (list): List of dictionaries containing bounding box information.
+
+    Returns:
+        None
+    """
+    img = Image.open(img_path)
+    img_width, img_height = img.size
+
+    # Calculate aspect ratio for the figure
+    aspect_ratio = img_width / img_height
+
+    # Set figure size based on the aspect ratio
+    fig_width = 8  # Set your desired figure width
+    fig_height = fig_width / aspect_ratio
+
+    plt.figure(figsize=(fig_width, fig_height))
+    plt.imshow(img)
+
     for box in results:
         x0, y0, x1, y1 = [int(b) for b in box['bbox']]
-        # print("new bounding" +  str(box['bbox']))
-        img = cv2.rectangle(img,(x0,y0),(x1,y1),(0,255,0),3)
 
-    plt.imshow(img[:,:,::-1])
-    plt.savefig(f'{os.path.basename(img_path)}_test.jpg')
+        box_color = "r"  # red
+        tag_color = "k"  # black
+
+        # Extract Bounding Box Max score idx and value
+        max_score = max(box['activations'])
+        max_category_id = box['activations'].index(max_score)
+
+        rect = patches.Rectangle(
+            (x0, y0),
+            x1 - x0,
+            y1 - y0,
+            edgecolor=box_color,
+            label=f"{max_category_id} ({max_score:.2f})",
+            facecolor='none'
+        )
+
+        plt.gca().add_patch(rect)
+
+        # Show class and score on plot
+        plt.text(
+            x0,
+            y0 - 50,
+            f"{max_category_id} ({max_score:.2f})",
+            fontsize="5",
+            color=tag_color,
+            backgroundcolor=box_color,
+        )
+
+    plt.legend(fontsize="5")
+
+    # Show plot
+    plt.axis("off")
+    plt.savefig(f'{os.path.basename(img_path)}_test.jpg', bbox_inches="tight", dpi=300)
+
+
 
 
 def calculate_iou(box1, box2):
@@ -105,15 +160,17 @@ def nms(boxes, iou_threshold=0.7):
     selected_boxes = []
 
     # Keep the box with highest confidence and remove overlapping boxes
-    while sorted_boxes:
-        delete_idxs = []
-        for i, box0 in enumerate(sorted_boxes):
-            for j, box1 in enumerate(sorted_boxes):
-                if i < j and calculate_iou(box0['bbox'], box1['bbox']) > iou_threshold:
-                    delete_idxs.append(j)
+    delete_idxs = []
+    for i, box0 in enumerate(sorted_boxes):
+        for j, box1 in enumerate(sorted_boxes):
+            if i < j and calculate_iou(box0['bbox'], box1['bbox']) > iou_threshold:
+                delete_idxs.append(j)
 
-        # now delete by popping them in reverse order
-        filtered_boxes = [box for idx, box in enumerate(sorted_boxes) if idx not in delete_idxs]
+    # Reverse the order of delete_idxs
+    delete_idxs.reverse()
+
+    # now delete by popping them in reverse order
+    filtered_boxes = [box for idx, box in enumerate(sorted_boxes) if idx not in delete_idxs]
 
     return filtered_boxes
 
@@ -163,6 +220,7 @@ def run_predict(img_path, model, hooks, threshold=0.5, iou=0.7, save_image = Fal
         x0, y0, x1, y1 = ops.scale_boxes(img_shape, np.array([x0.cpu(), y0.cpu(), x1.cpu(), y1.cpu()]), orig_img_shape)
         logits = all_logits[:,i]
         
+        # Filter by score threshold (of max score class)
         if max(class_probs_after_sigmoid) > threshold:
             boxes.append({
                 'bbox': [x0.item(), y0.item(), x1.item(), y1.item()],
@@ -186,18 +244,23 @@ def main():
     model_path = 'yolov8n.pt'
     img_path = 'bus.jpg'
     threshold = 0.5
+    iou_threshold = 0.7
 
     # load the model
     model, hooks = load_and_prepare_model(model_path)
 
     # run inference
-    results = run_predict(img_path, model, hooks)
+    results = run_predict(img_path, model, hooks, threshold, iou=iou_threshold, save_image=SAVE_TEST_IMG)
 
+    # Print Boxes information
     print("Processed", len(results), "boxes")
-    print("The first one is", results[0])
 
-    if SAVE_TEST_IMG:
-        plot_image(img_path, results)
+    for result in results:
+        print("\n")
+        print("Bounding Box :" + str(result['bbox']))
+        print("Logits :" + str(result['logits']))
+        print("Activations :" + str(result['activations']))
+        print("\n")
 
 if __name__ == '__main__':
     main()
