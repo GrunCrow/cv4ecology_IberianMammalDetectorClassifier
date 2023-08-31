@@ -4,7 +4,8 @@ from constants import *
 model_path = get_best_model_weights("2_exp_batch_16_no_birds")
 
 img_path = "Dataset/multispecies.jpeg"
-txt_path = "Dataset/validation.txt"
+#txt_path = "Dataset/validation.txt"
+txt_path = "Dataset/old_network.txt"
 
 category_mapping = {
     0: "bird",
