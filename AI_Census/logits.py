@@ -24,18 +24,17 @@ category_mapping = {
     14: "wild boar",
 }
 
-# load the model
-model, hooks = load_and_prepare_model(model_path)
-
 # run inference
 results = run_predict(input_path=txt_path, 
-                      model=model, 
-                      hooks=hooks, 
-                      score_threshold=0.5, 
-                      iou_threshold=0.7, 
+                      model_path=model_path, 
+                      score_threshold=0.4, 
+                      iou_threshold=0.5, 
                       save_image = False,
                       save_json=True,
-                      category_mapping = category_mapping)
+                      category_mapping = category_mapping,
+                      softmax_temperature_value = 3,
+                      agnostic=True,
+                      )
 
 for result in results:
     print("\n")
