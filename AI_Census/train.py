@@ -10,7 +10,7 @@ os.environ["COMET_AUTO_LOG_GRAPH"] = "true"
 os.environ["COMET_AUTO_LOG_PARAMETERS"] = "true"
 os.environ["COMET_AUTO_LOG_METRICS"] = "true"
 os.environ["COMET_LOG_PER_CLASS_METRICS"] = "true"
-os.environ["COMET_MAX_IMAGE_UPLOADS"] = "0"
+os.environ["COMET_MAX_IMAGE_UPLOADS"] = 0
 
 # initialize experiment in comet
 comet_ml.init("ai-census") # it get the name of the project name on training
