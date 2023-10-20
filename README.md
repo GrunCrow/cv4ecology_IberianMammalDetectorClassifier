@@ -19,6 +19,8 @@ By leveraging cutting-edge deep learning methods, the project aims to achieve un
 - Development of various datasets for training, validation and evaluation to check data poisoning effects and try to eliminate it.
 - Development of a comprehensive dataset for training, validation and test.
 - Creation of a state-of-the-art Neural Network for species detection and classification.
+- Modification of YOLOv8 scripts to obtain activation scores.
+- Creation of a script to develop a hierarchical postprocessing classification with variables to modify the performance.
 <!--- Advanced techniques for optimizing model performance and efficiency.-->
 
 
